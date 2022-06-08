@@ -21,7 +21,7 @@ export class ProductRepository {
     });
   }
 
-  getProducts(category: string | null = null): Product[] {
+  getProducts(category: string = null): Product[] {
     return this.products.filter(product => category == null || category == product.category);
   }
 
@@ -29,7 +29,7 @@ export class ProductRepository {
     return this.products.find(product => product.id == id);
   }
 
-  getCategories(): (string | undefined)[] {
+  getCategories(): string[] {
     return this.categories;
   }
 }
