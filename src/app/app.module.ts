@@ -7,6 +7,7 @@ import {StoreComponent} from "../store/store.component";
 import {CartDetailComponent} from "../store/cartDetail.component";
 import {CheckoutComponent} from "../store/checkout.component";
 import {StoreFirstGuard} from "../store/storeFirst.guard";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -28,8 +29,19 @@ import {StoreFirstGuard} from "../store/storeFirst.guard";
         path: "checkout", component: CheckoutComponent,
         canActivate: [StoreFirstGuard]
       },
+      /**
+       * de admin komt dan voor de url te staan : admin/main
+       */
+      {
+        path: "admin",
+        loadChildren: () => import("./admin/admin.module")
+          .then(m => m.AdminModule),
+        canActivate: [StoreFirstGuard]
+      },
       {path: "**", redirectTo: "/store"}
-    ])],
+    ]),
+    ReactiveFormsModule
+  ],
   providers: [StoreFirstGuard],
   bootstrap: [AppComponent]
 })

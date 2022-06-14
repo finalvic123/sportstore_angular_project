@@ -1,0 +1,9 @@
+input.ng-dirty.ng-invalid {
+  border: 2px solid #ff0000
+}
+/**
+These are specific styles for when the form is valid/invalid and will be applied automatically
+ */
+input.ng-dirty.ng-valid {
+  border: 2px solid #6bc502
+}

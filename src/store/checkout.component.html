@@ -1,0 +1,98 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col bg-dark text-white">
+      <a class="navbar-brand">SPORTS STORE</a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="orderSent" class="m-2 text-center">
+  <h2>Thanks!</h2>
+  <p>Thanks for placing your order.</p>
+  <p>We'll ship your goods as soon as possible.</p>
+  <button class="btn btn-primary" routerLink="/store">Return to Store</button>
+</div>
+
+<form *ngIf="!orderSent" [formGroup]="addOrder" class="m-2">
+
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input
+      class="form-control"
+      id="name"
+      type="text"
+      formControlName="name"
+      placeholder="please enter your name"/>
+    <span *ngIf="isNameFilledIn()" class="text-danger">
+      Please enter your name
+    </span>
+  </div>
+
+  <div class="form-group">
+    <label for="address">Address</label>
+    <input
+      class="form-control"
+      id="address"
+      type="text"
+      formControlName="address"
+      placeholder="please enter your address"/>
+    <span *ngIf="isAddressFilledIn()" class="text-danger">
+      Please enter your address
+    </span>
+  </div>
+
+  <div class="form-group">
+    <label for="city">City</label>
+    <input
+      class="form-control"
+      id="city"
+      formControlName="city"
+      type="text"
+      placeholder="please enter your city"/>
+    <span *ngIf="isCityFilledIn()" class="text-danger">
+      Please enter your city
+    </span>
+  </div>
+
+  <div class="form-group">
+    <label for="state">State</label>
+    <input
+      class="form-control"
+      id="state"
+      formControlName="state"
+      placeholder="please fill in your state"/>
+    <span *ngIf="isStateFilledIn()" class="text-danger">
+      Please enter your state
+    </span>
+  </div>
+
+  <div class="form-group">
+    <label for="zip">Zip/Postal Code</label>
+    <input
+      class="form-control"
+      id="zip"
+      formControlName="zip"
+      placeholder="please fill in your zip/postal code"
+    />
+    <span *ngIf="isZipFilledIn()" class="text-danger">
+      Please enter your zip/postal code
+    </span>
+  </div>
+
+  <div class="form-group">
+    <label for="country">Country</label>
+    <input
+      class="form-control"
+      id="country"
+      placeholder="please fill in your country"
+      formControlName="country"/>
+    <span *ngIf="isCountryFilledIn()" class="text-danger">
+      Please enter your country
+    </span>
+  </div>
+
+  <div class="text-center">
+    <button class="btn btn-secondary m-1" routerLink="/cart">Back</button>
+    <button class="btn btn-primary m-1" type="submit" (click)="submitForm()">Complete Order</button>
+  </div>
+</form>
