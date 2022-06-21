@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../model/auth.service";
 
@@ -12,14 +12,14 @@ export class AuthComponent {
   public errorMessage: string;
 
   constructor(private router: Router,
-              private formBuilder : FormBuilder,
-              private authService : AuthService) {
+              private formBuilder: FormBuilder,
+              private authService: AuthService) {
   }
 
 
   authenticateUser = this.formBuilder.group({
-    name : ['', Validators.required],
-    password : ['', Validators.required]
+    name: ['', Validators.required],
+    password: ['', Validators.required]
   })
 
   getFormAttribute = (controlName: string) => this.authenticateUser.get(`${controlName}`);
@@ -31,7 +31,7 @@ export class AuthComponent {
       this.authService.authenticate(this.username, this.password)
         .subscribe(response => {
           if (response) {
-            this.router.navigateByUrl("/admin/main");
+            this.router.navigateByUrl("/admin/main/products");
           }
           this.errorMessage = "Authentication Failed";
         })

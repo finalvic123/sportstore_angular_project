@@ -1,0 +1,52 @@
+<!-- eigenlijk best slim dat je de create en de edit onder dezelfde html zet -->
+<div class="bg-primary p-2 text-white"
+     [class.bg-warning]="editing"
+     [class.text-dark]="editing">
+  <h5>{{editing ? 'Edit' : 'Create'}} Product</h5>
+</div>
+<form [formGroup]="editProductGroup">
+  <div class="form-group">
+    <label for="name">Name Product</label>
+    <input class="form-control"
+           id="name"
+           formControlName="name"
+           type="text"
+           placeholder="please fill in the name of the product"/>
+  </div>
+  <div class="form-group">
+    <label for="category">Category Product</label>
+    <input class="form-control"
+           id="category"
+           formControlName="category"
+           type="text"
+           placeholder="please fill in the category of the product"/>
+  </div>
+  <div class="form-group">
+    <label for="description">Description Product</label>
+    <textarea class="form-control"
+              id="description"
+              formControlName="description"
+              placeholder="please fill in a description"
+              type="text">
+        </textarea>
+  </div>
+  <div class="form-group">
+    <label for="price">Price Product</label>
+    <input class="form-control"
+           id="price"
+           formControlName="price"
+           type="number"
+           placeholder="0.00"/>
+  </div>
+  <button type="submit"
+          (click)="save()"
+          class="btn btn-primary m-1"
+          [class.btn-warning]="editing">
+          {{editing ? "Save" : "Create"}}
+  </button>
+  <button type="reset"
+          class="btn btn-secondary"
+          routerLink="/admin/main/products">
+    Cancel
+  </button>
+</form>
