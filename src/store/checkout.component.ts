@@ -8,6 +8,7 @@ import {Order} from "../model/order.model";
   templateUrl: 'checkout.component.html',
   styleUrls : ['checkout.component.css']
 })
+
 export class CheckoutComponent implements OnInit {
   orderSent: boolean = false;
   submitted: boolean = false;
@@ -18,6 +19,28 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  submitForm() {
+    this.submitted = true;
+    if (this.addOrder.valid) {
+      console.log(this.order)//FIXME ie vult hem niet in
+      this.createOrderByForm();
+      this.repository.saveOrder(this.order).subscribe(order => {
+        this.order.clear();
+        this.orderSent = true;
+        this.submitted = false;
+      });
+    }
+  }
+
+  createOrderByForm() {
+    this.order.zip = this.getFormAttributeValue('zip');
+    this.order.address = this.getFormAttributeValue('address');
+    this.order.city = this.getFormAttributeValue('city');
+    this.order.country = this.getFormAttributeValue('country');
+    this.order.state = this.getFormAttributeValue('state');
+    this.order.name = this.getFormAttributeValue('name');
   }
 
   addOrder = this.formBuilder.group({
@@ -32,6 +55,7 @@ export class CheckoutComponent implements OnInit {
   });
 
   getFormAttribute = (controlName: string) => this.addOrder.get(`${controlName}`) as FormControl;
+  getFormAttributeValue = (controlName: string) : any => this.addOrder.get(`${controlName}`).value;
 
   isNameFilledIn = (): boolean => this.getFormAttribute("name").invalid && this.submitted;
   isAddressFilledIn = (): boolean => this.getFormAttribute("address").invalid && this.submitted;
@@ -39,15 +63,4 @@ export class CheckoutComponent implements OnInit {
   isStateFilledIn = (): boolean => this.getFormAttribute("state").invalid && this.submitted;
   isZipFilledIn = (): boolean => this.getFormAttribute("zip").invalid && this.submitted;
   isCountryFilledIn = (): boolean => this.getFormAttribute("country").invalid && this.submitted;
-
-  submitForm() {
-    this.submitted = true;
-    if (this.addOrder.valid) {
-      this.repository.saveOrder(this.order).subscribe(order => {
-        this.order.clear();
-        this.orderSent = true;
-        this.submitted = false;
-      });
-    }
-  }
 }

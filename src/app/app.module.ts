@@ -8,6 +8,8 @@ import {CartDetailComponent} from "../store/cartDetail.component";
 import {CheckoutComponent} from "../store/checkout.component";
 import {StoreFirstGuard} from "../store/storeFirst.guard";
 import {ReactiveFormsModule} from "@angular/forms";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,13 @@ import {ReactiveFormsModule} from "@angular/forms";
       },
       {path: "**", redirectTo: "/store"}
     ]),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [StoreFirstGuard],
   bootstrap: [AppComponent]

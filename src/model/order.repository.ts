@@ -24,6 +24,7 @@ export class OrderRepository {
   }
 
   saveOrder(order: Order): Observable<Order> {
+    console.log(order)//FIXME
     return this.dataSource.saveOrder(order);
   }
   updateOrder(order: Order) {

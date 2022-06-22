@@ -27,7 +27,7 @@ export class ProductRepository {
   }
 
   getProduct(id: number): Product | undefined {
-    return this.products.find(product => product.id === id);
+    return this.products.find(product => product.id == id);
   }
 
   saveProduct(product: Product) {

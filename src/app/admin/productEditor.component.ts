@@ -1,14 +1,13 @@
-import {Component} from "@angular/core";
-import {Router, ActivatedRoute} from "@angular/router";
-import {FormBuilder, Validators} from "@angular/forms";
-import {Product} from "../../model/product.model";
-import {ProductRepository} from "../../model/product.repository";
+import {Component} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
+import {FormBuilder, Validators} from '@angular/forms';
+import {Product} from '../../model/product.model';
+import {ProductRepository} from '../../model/product.repository';
 
 @Component({
-  templateUrl: "productEditor.component.html"
+  templateUrl: 'productEditor.component.html'
 })
 export class ProductEditorComponent {
-  submitted: boolean = false;
   editing: boolean = false;
   product: Product = new Product();
 
@@ -28,13 +27,14 @@ export class ProductEditorComponent {
      * Object.assign = Hiermee vul je automatisch een object in aan de hand van een gelijkaardig object
      */
     if (this.editing) {
-      this.product = Object.assign(this.product, productRepository.getProduct(this.activeRoute.snapshot.params['id']));
-      console.log(this.product)
+      Object.assign(this.product, productRepository.getProduct(this.activeRoute.snapshot.params['id']));
+      console.log(this.product);
+      console.log(this.activeRoute.snapshot.params['id']);
       this.fillInFormBasedOnProduct();
     }
   }
 
-  setFormAttributeValue =  (controlName: string, value : any) => this.editProductGroup.get(`${controlName}`).setValue(value);
+  setFormAttributeValue = (controlName: string, value: any) => this.editProductGroup.get(`${controlName}`).setValue(value);
   getFormAttributeValue = (controlName: string) => this.editProductGroup.get(`${controlName}`).value;
 
   fillInProduct() {
@@ -44,21 +44,23 @@ export class ProductEditorComponent {
     this.product.description = this.getFormAttributeValue('description');
   }
 
+  /**
+   * Use setValue to set them all and patchValue for only a few of them
+   */
   fillInFormBasedOnProduct() {
-    this.setFormAttributeValue('category', this.product.category)
-    console.log(this.product.category)
-    this.setFormAttributeValue('name', this.product.name)
-    this.setFormAttributeValue('description', this.product.description)
+    this.editProductGroup.setValue({
+      name: this.product.name,
+      category: this.product.category,
+      description: this.product.description,
+      price: this.product.price
+    })
   }
 
   save() {
-    this.submitted = true;
-    if (!this.editing) {
-      this.fillInProduct();
-    }
     if (this.editProductGroup.valid) {
+      this.fillInProduct();
       this.productRepository.saveProduct(this.product);
-      this.router.navigateByUrl("/admin/main/products");
+      this.router.navigateByUrl('/admin/main/products');
     }
   }
 }
